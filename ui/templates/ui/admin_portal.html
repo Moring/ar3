@@ -1,0 +1,54 @@
+{% extends "ui/base.html" %}
+{% block page_title %}Admin Portal{% endblock %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-md-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-3">
+          <div class="avatar avatar-md bg-primary-soft text-primary me-3">
+            <i class="bi bi-diagram-3"></i>
+          </div>
+          <div>
+            <h5 class="card-title mb-0">RBAC Management</h5>
+            <small class="text-muted">Assign users to client-scoped roles.</small>
+          </div>
+        </div>
+        <a href="{% url 'rbac_admin' %}" class="btn btn-outline-primary w-100">Manage Roles</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-3">
+          <div class="avatar avatar-md bg-success-soft text-success me-3">
+            <i class="bi bi-tags"></i>
+          </div>
+          <div>
+            <h5 class="card-title mb-0">Categories</h5>
+            <small class="text-muted">Maintain global document categories.</small>
+          </div>
+        </div>
+        <a href="{% url 'category_admin' %}" class="btn btn-outline-success w-100">Manage Categories</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-3">
+          <div class="avatar avatar-md bg-warning-soft text-warning me-3">
+            <i class="bi bi-building"></i>
+          </div>
+          <div>
+            <h5 class="card-title mb-0">Client Profiles</h5>
+            <small class="text-muted">Update business details and data domains.</small>
+          </div>
+        </div>
+        <a href="{% url 'client_profile' %}" class="btn btn-outline-warning w-100">Manage Clients</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

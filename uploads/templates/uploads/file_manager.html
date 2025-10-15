@@ -1,0 +1,64 @@
+{% extends "ui/base.html" %}
+{% block page_title %}File Manager{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <div>
+      <h5 class="mb-0">Files</h5>
+      <small class="text-muted">Browse and manage documents stored in your data domain.</small>
+    </div>
+    <a href="{% url 'upload' %}" class="btn btn-primary">
+      <i class="bi bi-upload me-1"></i> Upload
+    </a>
+  </div>
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover mb-0 align-middle">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Document</th>
+            <th scope="col">Category</th>
+            <th scope="col">Tags</th>
+            <th scope="col" class="text-end">Size</th>
+            <th scope="col" class="text-end">Uploaded</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for f in files %}
+            <tr>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="avatar avatar-sm bg-primary-soft text-primary me-3">
+                    <i class="bi bi-file-earmark-text"></i>
+                  </div>
+                  <div>
+                    <span class="fw-semibold">{{ f.filename }}</span>
+                    <div class="text-muted small">{{ f.content_type }}</div>
+                  </div>
+                </div>
+              </td>
+              <td>{{ f.category.name }}</td>
+              <td>
+                {% for tag in f.tag_list %}
+                  <span class="badge bg-light text-dark border me-1">{{ tag }}</span>
+                {% empty %}
+                  <span class="text-muted">-</span>
+                {% endfor %}
+              </td>
+              <td class="text-end">{{ f.size|filesizeformat }}</td>
+              <td class="text-end text-muted small">{{ f.uploaded_at|date:"M d, Y H:i" }}</td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="5" class="text-center py-5 text-muted">
+                <div class="mb-2"><i class="bi bi-cloud-arrow-up display-6"></i></div>
+                <p class="mb-0">No files yet. Upload your first document to get started.</p>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

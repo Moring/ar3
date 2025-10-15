@@ -1,0 +1,8 @@
+-r requirements.txt
+pytest
+pytest-django
+pytest-xdist
+pytest-cov
+factory_boy
+freezegun
+pytest-randomly

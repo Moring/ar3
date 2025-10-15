@@ -1,0 +1,11 @@
+{% extends "ui/base.html" %}
+{% block page_title %}Welcome{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title mb-3">Getting Started</h5>
+    <p class="card-text">This dashboard uses the Inspinia base theme.</p>
+    <div hx-get="{% url 'partial_example' %}" hx-trigger="load" class="border p-3 rounded bg-light"></div>
+  </div>
+</div>
+{% endblock %}

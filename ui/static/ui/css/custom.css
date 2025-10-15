@@ -1,0 +1,46 @@
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(15, 98, 254, 0.1);
+  color: #0f62fe;
+}
+.avatar.avatar-md {
+  width: 48px;
+  height: 48px;
+  font-size: 1.25rem;
+}
+.avatar.avatar-lg {
+  width: 64px;
+  height: 64px;
+  font-size: 1.5rem;
+}
+.bg-primary-soft {
+  background: rgba(15, 98, 254, 0.12) !important;
+  color: #0f62fe !important;
+}
+.bg-success-soft {
+  background: rgba(46, 204, 113, 0.15) !important;
+  color: #2ecc71 !important;
+}
+.bg-warning-soft {
+  background: rgba(241, 196, 15, 0.15) !important;
+  color: #f1c40f !important;
+}
+.bg-secondary-soft {
+  background: rgba(108, 117, 125, 0.15) !important;
+  color: #6c757d !important;
+}
+.btn-close {
+  float: none;
+}
+
+.topbar-actions .topbar-link {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.topbar-actions .topbar-link:hover,
+.topbar-actions .topbar-link:focus {
+  color: #fff;
+}

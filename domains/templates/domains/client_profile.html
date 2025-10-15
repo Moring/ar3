@@ -1,0 +1,55 @@
+{% extends "ui/base.html" %}
+{% block page_title %}Client Profile{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-xl-7">
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Business Information</h5>
+      </div>
+      <div class="card-body">
+        <form method="post" class="needs-validation" novalidate>
+          {% csrf_token %}
+          {{ form.as_p }}
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-primary" type="submit"><i class="bi bi-save me-1"></i> Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-5">
+    <div class="card shadow-sm">
+      <div class="card-header bg-light">
+        <h5 class="mb-0">Your Assignments</h5>
+      </div>
+      <div class="card-body">
+        {% if clients %}
+          <div class="mb-3">
+            <label class="form-label">Switch Client</label>
+            <select class="form-select" onchange="if(this.value){ window.location.href=this.value; }">
+              <option value="">Select...</option>
+              {% for c in clients %}
+                <option value="{% url 'client_profile' c.id %}" {% if c.id == client.id %}selected{% endif %}>{{ c.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        {% endif %}
+        <ul class="list-group list-group-flush">
+          {% for assignment in assignments %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <div class="fw-semibold">{{ assignment.client.name }}</div>
+                <small class="text-muted">{{ assignment.role.name }}</small>
+              </div>
+              <span class="badge bg-secondary-soft text-secondary">{{ assignment.client.slug }}</span>
+            </li>
+          {% empty %}
+            <li class="list-group-item text-muted text-center">No assignments</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "ui/base.html" %}
+{% block page_title %}RBAC Management{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-xl-7">
+    <div class="card shadow-sm mb-4">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <div>
+          <h5 class="mb-0">Current Assignments</h5>
+          <small class="text-muted">Roles are inherited via hierarchy.</small>
+        </div>
+      </div>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-striped mb-0">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Client</th>
+                <th>Role</th>
+                <th>Permissions</th>
+                <th>Assigned</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for assignment in assignments %}
+                <tr>
+                  <td>{{ assignment.user.get_username }}</td>
+                  <td>{{ assignment.client.name }}</td>
+                  <td><span class="badge bg-primary-soft text-primary fw-semibold">{{ assignment.role.name }}</span></td>
+                  <td>
+                    {% for perm in assignment.permission_list %}
+                      <span class="badge bg-light border text-dark me-1">{{ perm }}</span>
+                    {% empty %}
+                      <span class="text-muted">-</span>
+                    {% endfor %}
+                  </td>
+                  <td class="text-muted small">{{ assignment.created_at|date:"M d, Y" }}</td>
+                </tr>
+              {% empty %}
+                <tr>
+                  <td colspan="5" class="text-center py-4 text-muted">No assignments yet.</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-5">
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Assign Role</h5>
+      </div>
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="assign">
+          {{ assignment_form.as_p }}
+          <div class="d-grid">
+            <button class="btn btn-primary" type="submit"><i class="bi bi-person-plus me-1"></i> Assign</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="card shadow-sm">
+      <div class="card-header bg-light">
+        <h5 class="mb-0">Remove Assignment</h5>
+      </div>
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="remove">
+          {{ removal_form.as_p }}
+          <div class="d-grid">
+            <button class="btn btn-outline-danger" type="submit"><i class="bi bi-person-dash me-1"></i> Remove</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "ui/base.html" %}
+{% block page_title %}Upload Document{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-xl-6 col-lg-7">
+    <div class="card shadow-sm">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Add New Document</h5>
+      </div>
+      <div class="card-body">
+        <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label fw-semibold">File</label>
+            <input type="file" name="file" class="form-control" required>
+            <div class="form-text">Supported formats include PDF, DOCX, and text files.</div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Category</label>
+                <select name="category" class="form-select" required>
+                  <option value="">Select a category</option>
+                  {% for c in categories %}
+                    <option value="{{ c.id }}">{{ c.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Tags</label>
+                <input type="text" name="tags" class="form-control" placeholder="Comma separated (e.g. finance, q1)">
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <a href="{% url 'file_manager' %}" class="btn btn-light">Cancel</a>
+            <button class="btn btn-primary" type="submit"><i class="bi bi-cloud-arrow-up me-1"></i> Upload</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

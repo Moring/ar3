@@ -1,0 +1,15 @@
+Django>=5.2
+psycopg2-binary
+django-environ
+whitenoise
+django-htmx
+django-guardian
+django-mptt
+django-taggit
+stripe
+huey
+redis
+pgvector
+tiktoken
+python-slugify
+djangorestframework

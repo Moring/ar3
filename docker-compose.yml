@@ -1,0 +1,63 @@
+services:
+  db:
+    build:
+      context: ./docker/db
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_INITDB_ARGS: "--data-checksums"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/db/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  valkey:
+    image: redis:7
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  web:
+    build: .
+    command: sh -c "while true; do python manage.py migrate && python manage.py runserver 0.0.0.0:8000; done"
+    env_file: .env.example
+    ports: ["8000:8000"]
+    volumes:
+      - .:/app
+      - media:/app/var/media
+      - static:/app/var/static
+    depends_on:
+      db:
+        condition: service_healthy
+      valkey:
+        condition: service_started
+
+  worker:
+    build: .
+    command: sh -c "python manage.py run_huey"
+    env_file: .env.example
+    volumes:
+      - .:/app
+    depends_on:
+      db:
+        condition: service_healthy
+      valkey:
+        condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "python manage.py huey_healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  pgdata:
+  media:
+  static:

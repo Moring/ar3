@@ -1,0 +1,37 @@
+version: "3"
+
+vars:
+  DOCKER_COMPOSE: docker compose
+
+tasks:
+  dev:up:
+    desc: Start the development containers in detached mode.
+    cmds:
+      - "{{.DOCKER_COMPOSE}} up -d"
+
+  dev:down:
+    desc: Stop and remove the running development containers.
+    cmds:
+      - "{{.DOCKER_COMPOSE}} down --remove-orphans"
+
+  dev:init:
+    desc: Boot the stack in the background and upsert configured development objects.
+    cmds:
+      - "{{.DOCKER_COMPOSE}} up -d"
+      - "{{.DOCKER_COMPOSE}} exec web python manage.py init_dev_data"
+
+  dev:test:
+    desc: Run the test suite via pytest, forwarding additional arguments.
+    cmds:
+      - "{{.DOCKER_COMPOSE}} run --rm web pytest {{.CLI_ARGS}}"
+
+  dev:clean:
+    desc: Tear down the stack and remove local images and volumes.
+    cmds:
+      - "{{.DOCKER_COMPOSE}} down --rmi all --volumes --remove-orphans"
+
+  dev:bounce:
+    desc: Clean the stack completely and start it fresh.
+    cmds:
+      - task: dev:clean
+      - task: dev:up

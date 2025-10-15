@@ -1,0 +1,41 @@
+{% extends "ui/base.html" %}
+{% block page_title %}Categories{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Add Category</h5>
+      </div>
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <div class="d-grid">
+            <button class="btn btn-primary" type="submit"><i class="bi bi-plus-circle me-1"></i> Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card shadow-sm">
+      <div class="card-header bg-light">
+        <h5 class="mb-0">Existing Categories</h5>
+      </div>
+      <div class="card-body p-0">
+        <ul class="list-group list-group-flush">
+          {% for category in categories %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span class="fw-semibold">{{ category.name }}</span>
+              <span class="badge bg-secondary-soft text-secondary">{{ category.slug }}</span>
+            </li>
+          {% empty %}
+            <li class="list-group-item text-center text-muted py-4">No categories yet.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
