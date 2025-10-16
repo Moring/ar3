@@ -1,10 +1,12 @@
 from django.contrib import admin
-from django.urls import path, include
-from ui.views import healthz
+from django.urls import include, path
+
+from ui.views import health, healthz
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("healthz", healthz, name="healthz"),
+    path("health", health, name="health"),
     path("accounts/", include("django.contrib.auth.urls")),
     path("rbac/", include("rbac.urls")),
     path("contexts/", include("contexts.urls")),

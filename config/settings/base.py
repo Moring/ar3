@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     "mptt",
     "taggit",
     "rest_framework",
+    "config",
     "ui",
     "domains",
     "uploads",

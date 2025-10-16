@@ -27,7 +27,7 @@ services:
 
   web:
     build: .
-    command: sh -c "while true; do python manage.py migrate && python manage.py runserver 0.0.0.0:8000; done"
+    command: sh -c "while true; do ./manage.py migrate && ./manage.py runserver 0.0.0.0:8000; done"
     env_file: .env.example
     ports: ["8000:8000"]
     volumes:
@@ -42,7 +42,7 @@ services:
 
   worker:
     build: .
-    command: sh -c "python manage.py run_huey"
+    command: sh -c "./manage.py run_huey"
     env_file: .env.example
     volumes:
       - .:/app
@@ -52,7 +52,7 @@ services:
       valkey:
         condition: service_started
     healthcheck:
-      test: ["CMD-SHELL", "python manage.py huey_healthcheck"]
+      test: ["CMD-SHELL", "./manage.py huey_healthcheck"]
       interval: 30s
       timeout: 10s
       retries: 3

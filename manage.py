@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import os, sys
 def main():
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.dev")

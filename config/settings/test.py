@@ -26,5 +26,3 @@ MIGRATION_MODULES = {
     "rbac": None,
     "uploads": None,
 }
-
-INSTALLED_APPS = [*INSTALLED_APPS, "config"]
